@@ -1,0 +1,14 @@
+
+// Script //
+node ('master'){
+    stage("checkout"){
+        git branch: 'develop', url: 'https://github.com/nongqianqian/incubator-dubbo-ops.git'
+    }
+/* Requires the Docker Pipeline plugin to be installed */
+    docker.image('127.0.0.1/boc/maven3.5.4-jkd-8:1.0').inside("-v $HOME/.m2:/root/.m2 -v $HOME/.npm:/.npm"){ 
+         stage('end-package') {
+           sh 'mvn package -Ddevelop'
+         }
+   }
+}
+
